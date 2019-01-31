@@ -547,6 +547,17 @@ Follow the steps below to provision the AKS cluster and deploy the *po-service* 
 
      ![alt tag](./images/D-04.png)
 
+12.  (Optional) Use ACI Connector (Virtual Kubelet) to burst into additional "po-service" in ACI (Azure COntainer Instances) instead of AKS cluster. Here we can see AKS and ACI combine to provide the best of “serverless” computing – invisible infrastructure and micro-billing – all managed through the open Kubernetes APIs.
+
+    # Deploy the ACI Connector. Use the Resource group and AKS cluster name used in above steps
+
+    az aks install-connector --resource-group myResourceGroup --name akscluster --connector-name myaciconnector
+    #
+    # The connector has been deployed and with a kubectl get nodes you can see that the ACI Connector is a new node in your cluster. Now scale up the po-service to 10 using the following command
+
+    $ kubectl scale deploy po-service --replicas 10
+
+
 ### Accessing the Purchase Order Microservice REST API 
 
 As soon as the **po-service** application is deployed in AKS, 2 purchase orders will be inserted into the backend (MySQL) database.  The inserted purchase orders have ID's 1 and 2.  The application's REST API supports all CRUD operations (list, search, create, update and delete) on purchase orders.
